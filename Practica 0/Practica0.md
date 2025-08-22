@@ -49,9 +49,9 @@
 
 ### Observaciones
 
-- .
-- .
-- .
+- De 1 a 4 nodos, los tiempos disminuyen
+- A partir de 6 nodos los beneficios se reducen, el tiempo se mantiene estable
+- De 10 en adelante usa más procesos que hilos disponibles lo que incrementa los tiempos
 
 ## Equipo #3
 
