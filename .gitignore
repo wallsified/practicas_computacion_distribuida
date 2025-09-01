@@ -1,2 +1,6 @@
 ### Archivos compilados localmente ###
 a.out
+
+## Archivos del IDE
+*.xml
+/.idea

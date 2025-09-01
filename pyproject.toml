@@ -1,0 +1,10 @@
+[project]
+name = "practicas-computacion-distribuida"
+version = "0.1.0"
+description = "Prácticas de Computación Distribuida en el semestre 26-1."
+authors = [
+    { name = "Daniel Paredes", email = "danielparedes@ciencias.unam.mx" },
+    ]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
