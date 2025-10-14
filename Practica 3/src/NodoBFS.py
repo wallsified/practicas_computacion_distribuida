@@ -4,11 +4,12 @@ from Canales.CanalRecorridos import *
 
 TICK = 1
 
+
 class NodoBFS(Nodo):
-    ''' Implementa la interfaz de Nodo para el algoritmo BFS. '''
+    """Implementa la interfaz de Nodo para el algoritmo BFS."""
 
     def __init__(self, id_nodo, vecinos, canal_entrada, canal_salida):
-        ''' Constructor de nodo que implemente el algoritmo BFS. '''
+        """Constructor de nodo que implemente el algoritmo BFS."""
         super().__init__(id_nodo, vecinos, canal_entrada, canal_salida)
 
         """Representa un nodo BFS.
@@ -20,14 +21,14 @@ class NodoBFS(Nodo):
         - expected_msg = cantidad de mensajes BACK a esperar.
         """
         self.padre = id_nodo
-        self.distancia = float('inf')
+        self.distancia = float("inf")
         self.hijos = []
         self.expected_msg = 0
 
     def bfs(self, env):
-        ''' Algoritmo BFS distribuido. '''
+        """Algoritmo BFS distribuido."""
 
-        ''' Algoritmo:
+        """ Algoritmo:
         1.	El nodo distinguido es el único que inicia el proceso. Se envía a sí mismo un mensaje GO con una distancia de -1.
         2.	Cuando un nodo recibe un mensaje GO por primera vez:
             2.1	Establece al emisor como su padre y fija su distancia como la distancia del emisor + 1.
@@ -44,45 +45,47 @@ class NodoBFS(Nodo):
         En ese momento, envía un BACK con respuesta 'yes' a su propio padre para notificar que su sub-árbol está completo.
         7.	El algoritmo termina cuando el nodo distinguido también ha recibido todas las respuestas esperadas 
         y su contador expected_msg llega a cero.
-        '''
+        """
         if self.distinguido:
-            mensaje = ('GO', -1, self.id_nodo)
+            mensaje = ("GO", -1, self.id_nodo)
             self.canal_salida.envia(mensaje, [self.id_nodo])
 
         while True:
             mensaje = yield self.canal_entrada.get()
             tipo = mensaje[0]
 
-            if tipo == 'GO':
+            if tipo == "GO":
                 _, dist_emisor, id_emisor = mensaje
-                
-                if self.distancia == float('inf'):
+
+                if self.distancia == float("inf"):
                     self.padre = id_emisor
                     self.distancia = dist_emisor + 1
                     vecinos_a_enviar = [v for v in self.vecinos if v != self.padre]
                     self.expected_msg = len(vecinos_a_enviar)
-                    
+
                     if self.expected_msg == 0:
-                        msg_back = ('BACK', 'yes', self.distancia, self.id_nodo)
+                        msg_back = ("BACK", "yes", self.distancia, self.id_nodo)
                         self.canal_salida.envia(msg_back, [self.padre])
                     else:
-                        msg_go = ('GO', self.distancia, self.id_nodo)
+                        msg_go = ("GO", self.distancia, self.id_nodo)
                         self.canal_salida.envia(msg_go, vecinos_a_enviar)
                 else:
-                    msg_back = ('BACK', 'no', self.distancia, self.id_nodo)
+                    msg_back = ("BACK", "no", self.distancia, self.id_nodo)
                     self.canal_salida.envia(msg_back, [id_emisor])
 
-            elif tipo == 'BACK':
+            elif tipo == "BACK":
                 _, respuesta, _, id_hijo = mensaje
-                
-                if respuesta == 'yes':
+
+                if respuesta == "yes":
                     self.hijos.append(id_hijo)
-                
+
                 self.expected_msg -= 1
-                
+
                 if self.expected_msg == 0:
                     if not self.distinguido:
-                        msg_back = ('BACK', 'yes', self.distancia, self.id_nodo)
+                        msg_back = ("BACK", "yes", self.distancia, self.id_nodo)
                         self.canal_salida.envia(msg_back, [self.padre])
                     else:
-                        print(f"Nodo {self.id_nodo}: El árbol de expansión BFS ha sido construido.")
+                        print(
+                            f"Nodo {self.id_nodo}: El árbol de expansión BFS ha sido construido."
+                        )
