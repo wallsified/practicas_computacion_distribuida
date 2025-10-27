@@ -1,0 +1,7 @@
+*.lock
+.venv
+.python-version
+main.py
+*.toml
+__pycache__
+*_cache
