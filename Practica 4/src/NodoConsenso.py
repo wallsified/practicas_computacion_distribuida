@@ -55,7 +55,9 @@ class NodoConsenso(Nodo):
                     id_remitente, valor_remitente, ronda_mensaje = mensaje
                     if ronda_mensaje == ronda:
                         mensajes_ronda.append(valor_remitente)
-                        self.V[id_remitente] = id_remitente  # Actualiza V con el remitente
+                        self.V[id_remitente] = (
+                            id_remitente  # Actualiza V con el remitente
+                        )
                 yield env.timeout(0.01)
 
             # Actualizar el conjunto de valores recibidos
