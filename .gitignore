@@ -4,3 +4,7 @@ a.out
 ## Archivos del IDE
 *.xml
 /.idea
+*.vscode
+
+## cache
+*.pyc
