@@ -6,8 +6,8 @@
 | Reyna Mendez Cristian Ignacio | 320149579  |
 | Lopez Ramirez Juan Carlos     | 316186021  |
 
->![NOTE]
->Para que el sistema sea parcialmente asíncrono usamos delays aleatorios (entre 0.1 y 0.5 segundos, si fuera más tiempo tardarían demasiado en ejecutarse) antes de cada envío y recepción de mensajes. 
+> Nota:
+> Para que el sistema sea parcialmente asíncrono usamos delays aleatorios (entre 0.1 y 0.5 segundos, si fuera más tiempo tardarían demasiado en ejecutarse) antes de cada envío y recepción de mensajes. 
 
 # Resumen de implementación del Reloj de Lamport
 
